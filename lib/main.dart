@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import './widget/HomePage.dart';
+import './widget/DetailPage.dart';
 import 'package:flutter/rendering.dart';
-
 
 void main() {
   // debugPaintSizeEnabled = true;
@@ -18,6 +18,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.deepPurple,
       ),
       home: HomePage(),
+      routes: <String, WidgetBuilder> {
+        '/detail': (BuildContext context) => DetailPage()
+      },
     );
   }
 }

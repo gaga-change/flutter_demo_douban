@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
+import './DetailPage.dart';
 
 class HomePage extends StatefulWidget {
   _HomePage createState() => _HomePage();
@@ -93,40 +94,46 @@ class _HomePage extends State<HomePage> {
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
                 var item = this._data[index];
-                return Container(
-                  padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
-                  alignment: Alignment.center,
-                  child: Column(
-                    children: <Widget>[
-                      Expanded(
-                        flex: 3,
-                        child: Center(
-                          child: Image.network(item['cover']),
-                        ),
-                      ),
-                      Expanded(
-                          child: Column(
+                return GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (BuildContext context) => DetailPage(detail: item)));
+                    },
+                    child: Container(
+                      padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
+                      alignment: Alignment.center,
+                      child: Column(
                         children: <Widget>[
                           Expanded(
+                            flex: 3,
                             child: Center(
-                                child: Text(
-                              item['title'],
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(fontSize: 12),
-                            )),
+                              child: Image.network(item['cover']),
+                            ),
                           ),
                           Expanded(
-                            child: Row(
-                              children: <Widget>[
-                                Expanded(child: this._getStars(item['rate'])),
-                              ],
-                            ),
-                          )
+                              child: Column(
+                            children: <Widget>[
+                              Expanded(
+                                child: Center(
+                                    child: Text(
+                                  item['title'],
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(fontSize: 12),
+                                )),
+                              ),
+                              Expanded(
+                                child: Row(
+                                  children: <Widget>[
+                                    Expanded(
+                                        child: this._getStars(item['rate'])),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ))
                         ],
-                      ))
-                    ],
-                  ),
-                );
+                      ),
+                    ));
               },
               childCount: this._data.length,
             ),
